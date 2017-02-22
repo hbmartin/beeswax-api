@@ -1,8 +1,10 @@
-import requests, json
+import json
+import requests
+
 
 class Session(requests.Session):
     _url_ = ""
-    
+
     def url(self, path):
         return self._url_ + path
 
@@ -12,7 +14,7 @@ class Session(requests.Session):
         if not resp.ok:
             raise LoginException()
         return self
-    
+
     def segments(self):
         return self.get(self.url('/rest/segment')).json()
 
@@ -28,6 +30,7 @@ class Session(requests.Session):
 
     def segment_update(self, su):
         return self.post(self.url('/rest/segment_update'), data=str(su))
+
 
 class LoginException(Exception):
     pass
