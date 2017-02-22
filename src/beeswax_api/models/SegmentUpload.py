@@ -24,7 +24,7 @@ class SegmentUpload(object):
     segment_key_type = attr.ib(default="DEFAULT")
     continent = attr.ib(default="NAM")
     user_id_type = attr.ib(default="BEESWAX")
-    # account_id ?
+    account_id = attr.ib(default=2)
     
     def __attrs_post_init__(self):
         attr.validate(self)

@@ -16,5 +16,18 @@ class Session(requests.Session):
     def segments(self):
         return self.get(self.url('/rest/segment')).json()
 
+    # TODO: segment_upload call passing file, which automatically finds file_size
+    # and then proceeds with upload using response's ID
+
+    def segment_upload(self, su):
+        return self.post(self.url('/rest/segment_upload'), data=str(su))
+
+    def segment_upload_file(self, sid, sfile):
+        files = {'file': ('segment_file', open(sfile, 'rb'), 'text/plain')}
+        return self.post(self.url('/rest/segment_upload/upload/' + sid), files=files)
+
+    def segment_update(self, su):
+        return self.post(self.url('/rest/segment_update'), data=str(su))
+
 class LoginException(Exception):
     pass
