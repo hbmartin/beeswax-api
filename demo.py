@@ -1,4 +1,5 @@
-import os, sys
+import os
+import sys
 sys.path.append(os.path.join(os.getcwd(), 'src'))
 import argparse
 import json
@@ -7,6 +8,7 @@ from beeswax_api import __version__
 from beeswax_api.SessionFactory import SessionFactory
 from beeswax_api.models.SegmentUpload import SegmentUpload
 from beeswax_api.models.SegmentUpdate import SegmentUpdate, UserSegment
+from beeswax_api.Exceptions import BeeswaxException, LoginException
 
 
 def get_parser():
@@ -23,7 +25,13 @@ def main(args=None):
     factory = SessionFactory(url="https://XYZ.api.beeswax.com", email="", password="")
     session = factory.login()
 
-    print(session.segments())
+    try:
+        segments = session.segments().json()['payload']
+        for seg in segments:
+            print(seg)
+    except BeeswaxException(e):
+        print(e.body)
+
     su = SegmentUpload(segment_file_list=[""])
     print(su)
     # print(session.segment_upload(su))

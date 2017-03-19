@@ -19,6 +19,10 @@ class SegmentUpdate(object):
             raise ValueError("Can only add UserSegment")
         self.user_data.append(us)
 
+    def add_user_dict(self, users):
+        for key, val in users.items():
+            self.add_user(UserSegment(user_id=key, segments=val))
+
 
 @attr.s
 class UserSegment(object):
